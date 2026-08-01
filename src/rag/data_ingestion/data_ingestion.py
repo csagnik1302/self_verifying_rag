@@ -34,36 +34,44 @@ def embedding_creator(chunks,model,hf_access_token):
 
     text_list=[i.page_content for i in chunks]
 
-    embeddings=model.encode(text_list,normalize_embeddings=True)
+    embeddings=model.encode(text_list,normalize_embeddings=True,show_progress_bar=True)
 
     return embeddings
 
 
+
+
+def batch_upsert(client,points,collection_name,batch=100):
+
+    counter=1
+    
+    for i in range(0,len(points),batch):
+        points_batch=points[i:i+batch]
+        client.upsert(collection_name=collection_name, points=points_batch)
+        print(f'Batch {counter} upserted to the DB')
+        counter+=1
+
+
+
 def vector_database(embeddings, chunks, cluster_url, api_key):
 
-    user_input=int(input('What is your requirement:\n1. Get Database info\n2. Recreate the Database.\n Reply with 1 or 2: '))
-
-    qdrant_client=QdrantClient(url=cluster_url,api_key=api_key)
+    qdrant_client=QdrantClient(url=cluster_url,api_key=api_key,timeout=60)
     collection_name='rag_vector_db'
 
-    if user_input==2:
 
-        qdrant_client.recreate_collection(collection_name=collection_name,
-                                        vectors_config=VectorParams(size=embeddings.shape[1],distance=Distance.COSINE))
-
-
-        points=[PointStruct(id=i, vector=embeddings[i].tolist(), payload={**chunks[i].metadata,"page_content":chunks[i].page_content}) for i in range(len(chunks))]
-
-        qdrant_client.upsert(collection_name=collection_name, points=points)
-
-        string_out='Dataase Recreation Complete'
-
-        return string_out
+    qdrant_client.recreate_collection(collection_name=collection_name,
+                                    vectors_config=VectorParams(size=embeddings.shape[1],distance=Distance.COSINE))
 
 
-    elif user_input==1:
+    points=[PointStruct(id=i, vector=embeddings[i].tolist(), payload={**chunks[i].metadata,"page_content":chunks[i].page_content}) for i in range(len(chunks))]
 
-        return collection_name, qdrant_client
+    batch_upsert(client=qdrant_client,points=points,collection_name=collection_name)
+
+    string_out='Dataase Recreation Complete'
+
+    return string_out
+
+
 
 
 
@@ -92,18 +100,18 @@ def main(directory,embedding_model,hf_access_token,cluster_url,cluster_api_key,c
 
 if __name__=='__main__':
 
+    import os
+    from dotenv import load_dotenv
+
+    load_dotenv()
+
     PATH=r'data\raw'
 
     embedding_model='BAAI/bge-m3'
 
-    with open(r'.venv/HF/access_token_key.txt','r') as f:
-        hf_token=f.read()
-
-    with open(r'.venv/Qdrant/qdrant_API.txt','r') as f:
-        cluster_api_key=f.read()
-
-    with open(r'.venv/Qdrant/qdrant_endpoint.txt','r') as f:
-        cluster_url=f.read()
+    hf_token=os.getenv('HF_ACCESS_TOKEN')
+    cluster_api_key=os.getenv('QDRANT_API_KEY')
+    cluster_url=os.getenv('QDRANT_URL')
 
     out=main(directory=PATH, embedding_model=embedding_model, hf_access_token=hf_token, cluster_api_key=cluster_api_key, cluster_url= cluster_url)
 

@@ -1,4 +1,4 @@
-from utilities import export_pdf
+from src.misc.utilities import export_pdf
 import re
 import wikipediaapi
 
