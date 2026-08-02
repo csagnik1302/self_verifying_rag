@@ -1,0 +1,6 @@
+Question: [QUERY]
+
+Sources:
+[SOURCES]
+
+Answer the question using only the pages above. Cite every claim with the page ID it came from.

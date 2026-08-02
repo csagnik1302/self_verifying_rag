@@ -1,0 +1,11 @@
+wikipedia-api
+fpdf2
+langchain
+langchain_community
+pymupdf
+sentence-transformers
+qdrant-client
+compressed-tensors>=0.15.0
+psutil
+kernels
+google-genai

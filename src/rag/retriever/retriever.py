@@ -31,7 +31,8 @@ def retrieval(query_embed, topk, cluster_url, cluster_api_key):
     hits=client.query_points(
         collection_name=collection_name,
         query=query_embed.tolist(),
-        limit=topk
+        limit=topk,
+        score_threshold=0.5
     ).points
 
     out=[]
