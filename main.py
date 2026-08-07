@@ -1,18 +1,24 @@
+from pathlib import Path
 from src.rag.augmented_generation.generator import retrieval_augmented_generation
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
+ROOT=Path(__file__).resolve().parent
+
+USER_TEMPLATE=ROOT/'src'/'rag'/'augmented_generation'/'prompt'/'user_template.txt'
+SYSTEM_TEMPLATE=ROOT/'src'/'rag'/'augmented_generation'/'prompt'/'system_template.txt'
+
 hf_access_token=os.getenv('HF_ACCESS_TOKEN')
 qdrant_cluster_url=os.getenv('QDRANT_URL')
 qdrant_api_key=os.getenv('QDRANT_API_KEY')
 gemini_api_key=os.getenv('GEMINI_API_KEY')
 
-with open(r'src\rag\augmented_generation\prompt\user_template.txt', 'r') as f:
+with open(USER_TEMPLATE, 'r') as f:
     user_template=f.read()
 
-with open(r'src\rag\augmented_generation\prompt\system_template.txt', 'r') as f:
+with open(SYSTEM_TEMPLATE, 'r') as f:
     system_prompt=f.read()
 
 query=input('What is your question: ')

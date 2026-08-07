@@ -9,3 +9,6 @@ compressed-tensors>=0.15.0
 psutil
 kernels
 google-genai
+spacy
+pysbd
+wtpsplit

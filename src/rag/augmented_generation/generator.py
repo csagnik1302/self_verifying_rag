@@ -1,5 +1,13 @@
+from pathlib import Path
 from ..retriever.retriever import retriever
 from google import genai
+from pydantic import BaseModel
+
+
+class Claim(BaseModel):
+    claim:str
+    page_ids:list[int]
+
 
 
 def build_user_prompt(query, user_template, hf_access_token, cluster_url, cluster_api_key):
@@ -43,10 +51,8 @@ def generator(prompt, system_prompt, gemini_api_key, generator_model= 'gemini-3.
     else:
 
         gemini_client=genai.Client(api_key=gemini_api_key)
-        interaction=gemini_client.interactions.create(model=generator_model, system_instruction=system_prompt, input=prompt, generation_config={'temperature':0.0})
-        # System prompt goes to system instruction, user prompt goes to input
-
-        output=interaction.output_text
+        interation=gemini_client.models.generate_content(model=generator_model, contents=prompt, config=genai.types.GenerateContentConfig(system_instruction=system_prompt, temperature=0.0, response_mime_type="application/json", response_schema=list[Claim]))
+        output:list[Claim]=interation.parsed
 
     return output
 
@@ -62,6 +68,14 @@ def retrieval_augmented_generation(query, user_template, system_prompt, hf_acces
 
 if __name__=='__main__':
 
+    PARENT=Path(__file__).resolve().parent
+    SRC=PARENT.parent
+    ROOT=SRC.parent
+
+    USER_TEMPLATE=ROOT/'src'/'rag'/'augmented_generation'/'prompt'/'user_template.txt'
+    SYSTEM_TEMPLATE=ROOT/'src'/'rag'/'augmented_generation'/'prompt'/'system_template.txt'
+    SAMPLE_OUTPUT=ROOT/'src'/'rag'/'augmented_generation'/'samples'/'prompts'/'sample_augmented_generation_output.txt'
+
     import os
     from dotenv import load_dotenv
 
@@ -72,15 +86,15 @@ if __name__=='__main__':
     qdrant_api_key=os.getenv('QDRANT_API_KEY')
     gemini_api_key=os.getenv('GEMINI_API_KEY')
 
-    with open(r'D:\RAG Project\src\rag\augmented_generation\prompt\user_template.txt', 'r') as f:
+    with open(USER_TEMPLATE, 'r') as f:
         user_template=f.read()
 
-    with open(r'D:\RAG Project\src\rag\augmented_generation\prompt\system_template.txt', 'r') as f:
+    with open(SYSTEM_TEMPLATE, 'r') as f:
         system_prompt=f.read()
 
     query=input('What is your question: ')
 
-    out=augmented_generation(query=query, 
+    out=retrieval_augmented_generation(query=query, 
                              user_template=user_template, 
                              system_prompt=system_prompt, 
                              hf_access_token=hf_access_token, 
@@ -88,7 +102,7 @@ if __name__=='__main__':
                              cluster_api_key=qdrant_api_key,
                              gemini_api_key=gemini_api_key)
 
-    with open(r'D:\RAG Project\src\rag\augmented_generation\samples\prompts\sample_augmented_generation_output.txt','w', encoding='utf-8') as f:
+    with open(SAMPLE_OUTPUT,'w', encoding='utf-8') as f:
         f.write(out)
 
     print(out)
