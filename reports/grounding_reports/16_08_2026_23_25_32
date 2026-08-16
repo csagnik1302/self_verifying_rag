@@ -1,0 +1,53 @@
+{
+    "claims": [
+        {
+            "claim": "Adolf Hitler was an Axis leader and F\u00fchrer (leader) of Germany.",
+            "support": [
+                "China\n France\nOther major allies\nPoland\n Yugoslavia\n Greece\n Canada\n Netherlands\n Belgium\n Czechoslovakia\n India\n Australia\nPeople in World War II\nLeaders in World War II\nAxis leaders\nAdolf Hitler \u2013 F\u00fchrer (leader) of Germany\n Hirohito \u2013 Emperor of Japan\n Benito Mussolini \u2013 Prime Minister and Duce of Italy\nAllied leaders\nJoseph Stalin \u2013 Leader of the Soviet Union\n Franklin D. Roosevelt \u2013 President of the United States\n Winston Churchill \u2013 Prime Minister of the United Kingdom\n Chiang Kai-shek \u2013 Leader of China",
+                "secure Italian entrance into the war were not fulfilled in the peace settlement. From 1922 to\n1925, the fascist movement led by Benito Mussolini seized power in Italy with a nationalist,\ntotalitarian, and class collaborationist agenda that abolished representative democracy,\nrepressed socialist, left-wing, and liberal forces and pursued an aggressive expansionist\nforeign policy aimed at making Italy a world power, promising the creation of a \"New Roman\nEmpire\".\nAdolf Hitler, after an unsuccessful attempt to overthrow the German government in 1923,\neventually became the chancellor of Germany in 1933 when President Paul von Hindenburg\nand the Reichstag appointed him. The Nazis soon abolished parliamentary democracy,\nespousing a radical, racially motivated revision of the world order, and began a massive\nrearmament campaign. Following Hindenburg's death in 1934, Hitler proclaimed himself\nF\u00fchrer of Germany. France, seeking to secure its alliance with Italy, allowed Italy a free hand in"
+            ],
+            "nli_status": {
+                "label": "entailment",
+                "probability": 0.99951171875
+            }
+        },
+        {
+            "claim": "Hitler made an unsuccessful attempt to overthrow the German government in 1923.",
+            "support": [
+                "secure Italian entrance into the war were not fulfilled in the peace settlement. From 1922 to\n1925, the fascist movement led by Benito Mussolini seized power in Italy with a nationalist,\ntotalitarian, and class collaborationist agenda that abolished representative democracy,\nrepressed socialist, left-wing, and liberal forces and pursued an aggressive expansionist\nforeign policy aimed at making Italy a world power, promising the creation of a \"New Roman\nEmpire\".\nAdolf Hitler, after an unsuccessful attempt to overthrow the German government in 1923,\neventually became the chancellor of Germany in 1933 when President Paul von Hindenburg\nand the Reichstag appointed him. The Nazis soon abolished parliamentary democracy,\nespousing a radical, racially motivated revision of the world order, and began a massive\nrearmament campaign. Following Hindenburg's death in 1934, Hitler proclaimed himself\nF\u00fchrer of Germany. France, seeking to secure its alliance with Italy, allowed Italy a free hand in"
+            ],
+            "nli_status": {
+                "label": "entailment",
+                "probability": 0.96728515625
+            }
+        },
+        {
+            "claim": "Hitler and the Nazi Party came to power in 1933 when he was appointed Chancellor of Germany.",
+            "support": [
+                "major power, but perceived that Italy did have strong enough influence to alter the political\nsituation in Europe by placing the weight of its support onto one side or another, and sought\nto balance relations between the three.\nDanube alliance, dispute over Austria\nIn 1933, Adolf Hitler and the Nazi Party came to power in Germany. Hitler had advocated an\nalliance between Germany and Italy since the 1920s. Shortly after being appointed Chancellor\nof Germany, Hitler sent a personal message to Mussolini, declaring \"admiration and homage\"\nand declaring his anticipation of the prospects of German\u2013Italian friendship and even alliance.\nHitler was aware that Italy held concerns over potential German land claims on South Tyrol,\nand assured Mussolini that Germany was not interested in South Tyrol. Hitler in Mein Kampf\nhad declared that South Tyrol was a non-issue considering the advantages that would be",
+                "secure Italian entrance into the war were not fulfilled in the peace settlement. From 1922 to\n1925, the fascist movement led by Benito Mussolini seized power in Italy with a nationalist,\ntotalitarian, and class collaborationist agenda that abolished representative democracy,\nrepressed socialist, left-wing, and liberal forces and pursued an aggressive expansionist\nforeign policy aimed at making Italy a world power, promising the creation of a \"New Roman\nEmpire\".\nAdolf Hitler, after an unsuccessful attempt to overthrow the German government in 1923,\neventually became the chancellor of Germany in 1933 when President Paul von Hindenburg\nand the Reichstag appointed him. The Nazis soon abolished parliamentary democracy,\nespousing a radical, racially motivated revision of the world order, and began a massive\nrearmament campaign. Following Hindenburg's death in 1934, Hitler proclaimed himself\nF\u00fchrer of Germany. France, seeking to secure its alliance with Italy, allowed Italy a free hand in"
+            ],
+            "nli_status": {
+                "label": "entailment",
+                "probability": 0.97998046875
+            }
+        },
+        {
+            "claim": "Following the death of President Paul von Hindenburg in 1934, Hitler proclaimed himself F\u00fchrer of Germany.",
+            "support": [
+                "secure Italian entrance into the war were not fulfilled in the peace settlement. From 1922 to\n1925, the fascist movement led by Benito Mussolini seized power in Italy with a nationalist,\ntotalitarian, and class collaborationist agenda that abolished representative democracy,\nrepressed socialist, left-wing, and liberal forces and pursued an aggressive expansionist\nforeign policy aimed at making Italy a world power, promising the creation of a \"New Roman\nEmpire\".\nAdolf Hitler, after an unsuccessful attempt to overthrow the German government in 1923,\neventually became the chancellor of Germany in 1933 when President Paul von Hindenburg\nand the Reichstag appointed him. The Nazis soon abolished parliamentary democracy,\nespousing a radical, racially motivated revision of the world order, and began a massive\nrearmament campaign. Following Hindenburg's death in 1934, Hitler proclaimed himself\nF\u00fchrer of Germany. France, seeking to secure its alliance with Italy, allowed Italy a free hand in",
+                "rearmament campaign. Following Hindenburg's death in 1934, Hitler proclaimed himself\nF\u00fchrer of Germany. France, seeking to secure its alliance with Italy, allowed Italy a free hand in\nEthiopia, which Italy desired as a colonial possession. The situation was aggravated in early\n1935 when the Territory of the Saar Basin was legally reunited with Germany, and Hitler"
+            ],
+            "nli_status": {
+                "label": "entailment",
+                "probability": 0.9951171875
+            }
+        }
+    ],
+    "num_claims": 4,
+    "num_entailed": 4,
+    "num_neutral": 0,
+    "num_contradicted": 0,
+    "grounding_score": 1.0,
+    "has_contradictions": false
+}

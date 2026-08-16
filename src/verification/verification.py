@@ -31,7 +31,9 @@ def rag_output_parser(output_sent_list, qdrant_url, qdrant_api_key):
     return out
 
 
-def nli_verifier(model_name, parsed_rag_output, hf_token):
+def nli_verifier(model_name, rag_output, hf_token, qdrant_url, qdrant_api_key):
+
+    parsed_rag_output=rag_output_parser(rag_output, qdrant_url, qdrant_api_key)
 
     tokenizer=AutoTokenizer.from_pretrained(pretrained_model_name_or_path=model_name, token=hf_token)
     model=AutoModelForSequenceClassification.from_pretrained(pretrained_model_name_or_path=model_name, token=hf_token).to(device)
@@ -82,7 +84,6 @@ if __name__=='__main__':
     hf_token=os.getenv("HF_ACCESS_TOKEN")
     model_name='MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7'
 
-    out=rag_output_parser(test_cases,qdrant_url, qdrant_api_key)
-    out1=nli_verifier(model_name=model_name, parsed_rag_output=out, hf_token=hf_token)
+    out=nli_verifier(model_name=model_name, rag_output=test_cases, hf_token=hf_token, qdrant_api_key=qdrant_api_key, qdrant_url=qdrant_url)
 
-    print(out1)
+    print(out)
