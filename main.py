@@ -1,6 +1,7 @@
 from pathlib import Path
 from src.rag.augmented_generation.generator import retrieval_augmented_generation
 import os
+import json
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -9,6 +10,7 @@ ROOT=Path(__file__).resolve().parent
 
 USER_TEMPLATE=ROOT/'src'/'rag'/'augmented_generation'/'prompt'/'user_template.txt'
 SYSTEM_TEMPLATE=ROOT/'src'/'rag'/'augmented_generation'/'prompt'/'system_template.txt'
+OUTPUT_PATH=ROOT/'src'/'rag'/'augmented_generation'/'samples'/'outputs'/'sample_augmented_generation_output.json'
 
 hf_access_token=os.getenv('HF_ACCESS_TOKEN')
 qdrant_cluster_url=os.getenv('QDRANT_URL')
@@ -30,5 +32,10 @@ out=retrieval_augmented_generation(query=query,
                             cluster_url=qdrant_cluster_url, 
                             cluster_api_key=qdrant_api_key,
                             gemini_api_key=gemini_api_key)
+
+
+
+with open(OUTPUT_PATH,'w',encoding='utf-8') as f:
+    json.dump(out, f)
 
 print(out)
