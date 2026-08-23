@@ -1,0 +1,165 @@
+1. PROCESS EACH PASSAGE INDEPENDENTLY.
+   Examine every passage separately. Do not combine information from different passages.
+
+2. PASSAGE INDEX.
+   The "passage" field must contain the exact zero-based index shown in the passage label.
+   [PASSAGE 0] → passage = 0
+   [PASSAGE 1] → passage = 1
+   [PASSAGE 2] → passage = 2
+   Never invent, change, or omit a passage index.
+
+3. SOURCE FAITHFULNESS.
+   Every nugget must be taken from a contiguous span of its corresponding source passage.
+   Do not generate information that is not present in the passage.
+
+4. TEXT NORMALIZATION IS REQUIRED.
+   Every returned nugget must be clean, readable text.
+
+   If the source passage contains run-together words or missing spaces,
+   you MUST restore the missing spaces in the nugget.
+
+   For example:
+
+   Source:
+   "distribution ofmalicious deepfake audio or visual media targeting a candidate running for public officewithin 60 days"
+
+   Output:
+   "distribution of malicious deepfake audio or visual media targeting a candidate running for public office within 60 days"
+
+   Similarly:
+
+   Source:
+   "H.R. 5586:Deepfakes Accountability Act"
+
+   Output:
+   "H.R. 5586: Deepfakes Accountability Act"
+
+   The nugget must never contain obvious run-together words, missing
+   spaces, duplicated spaces, or malformed spacing.
+
+   You may modify whitespace and obvious formatting artifacts for this
+   purpose, but you MUST NOT change the underlying words, meaning, facts,
+   entities, dates, or claims.
+
+   Do not paraphrase, summarize, reorder, or add information.
+
+5. ATOMICITY.
+   Each nugget must represent ONE distinct and independently useful piece of information that directly contributes to answering the query.
+
+6. FINE-GRAINED EXTRACTION.
+   Extract nuggets at the smallest useful granularity.
+   Prefer a short phrase or clause when it expresses one complete piece of information.
+   Do not extract an entire sentence when only part of the sentence contains the relevant information.
+
+7. SOFT LENGTH CHECK.
+   Nuggets should generally be concise and preferably shorter than a typical
+   sentence. As a soft guideline, prefer nuggets of roughly 5–20 words when
+   possible.
+
+   This is NOT a strict word limit. A nugget may be longer than 20 words when
+   additional text is necessary to preserve one complete, self-contained fact.
+
+   Do not shorten or split a nugget merely to satisfy the length guideline if
+   doing so would remove necessary context or separate the components of a
+   single indivisible fact.
+
+   Conversely, if a nugget is unusually long, reconsider whether it contains
+   multiple independent facts or answer components that should be separated.
+
+8. SPLIT MULTIPLE FACTS.
+   If a sentence contains multiple independent facts, extract them as separate nuggets.
+
+   For example:
+
+   "The EU AI Act was adopted in 2024 and entered into force on 1 August 2024."
+
+   should produce:
+
+   [
+       "The EU AI Act was adopted in 2024",
+       "entered into force on 1 August 2024"
+   ]
+
+   rather than returning the entire sentence as one nugget.
+
+9. SPLIT LISTS.
+   If a passage contains a list of independently relevant entities, laws, events,
+   technologies, organizations, or other answer components, normally extract
+   each relevant item as a separate nugget.
+
+   For example:
+
+   "Relevant legislation includes the EU AI Act, the GDPR, and the Digital Services Act."
+
+   should produce:
+
+   [
+       "the EU AI Act",
+       "the GDPR",
+       "the Digital Services Act"
+   ]
+
+   Do NOT return the entire list as one nugget merely because all items occur
+   within the same sentence.
+
+10. DO NOT OVER-SPLIT A SINGLE FACT.
+    Do not separate the components of one indivisible fact.
+
+    For example:
+
+    "The EU AI Act entered into force on 1 August 2024."
+
+    should remain one nugget:
+
+    "The EU AI Act entered into force on 1 August 2024."
+
+    Do not split it into:
+    - "The EU AI Act"
+    - "entered into force"
+    - "1 August 2024"
+
+    A nugget may therefore exceed the soft length guideline when necessary
+    to preserve a complete fact.
+
+11. QUERY RELEVANCE.
+    Extract only information that directly contributes to answering the query.
+    Do not extract information merely because it is topically related.
+
+12. CONTIGUOUS SOURCE SPAN.
+    A nugget must correspond to one contiguous span of its source passage.
+    Do not construct a nugget by joining words or phrases from separate parts
+    of the passage.
+
+13. COMPLETE INFORMATION.
+    If a short phrase would lose the meaning of the relevant fact, include enough
+    surrounding text to preserve the complete fact.
+
+    Completeness takes priority over the soft length guideline.
+
+14. MULTIPLE NUGGETS PER PASSAGE.
+    A passage may contain zero, one, or multiple nuggets.
+
+15. EMPTY PASSAGES.
+    If a passage contains no information relevant to the query, return that
+    passage with an empty "nugget" list.
+
+16. OUTPUT COVERAGE.
+    Return exactly one object for every passage provided in PASSAGE_LIST.
+    Preserve the original passage order.
+
+17. OUTPUT FORMAT.
+    Return only the structured JSON output.
+    Do not provide explanations, reasoning, commentary, or additional text.
+
+18. FINAL TEXT CHECK.
+    Before returning the output, inspect every nugget for obvious textual artifacts.
+
+    Every nugget must:
+    - have normal word spacing;
+    - contain no accidentally concatenated words;
+    - contain no missing spaces after punctuation where a space is required;
+    - contain no duplicated spaces;
+    - preserve the original words and meaning.
+
+    If a nugget contains a spacing artifact present in the source passage,
+    correct it before returning the nugget.

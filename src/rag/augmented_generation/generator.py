@@ -1,5 +1,5 @@
 from pathlib import Path
-from ..retriever.retriever import retriever
+from ..retriever.rel_retriever import retriever
 from google import genai
 from pydantic import BaseModel
 

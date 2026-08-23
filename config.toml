@@ -1,0 +1,8 @@
+[data_ingestion]
+chunk_embedding='BAAI/bge-m3'
+
+[document_retriever]
+embedding_model='BAAI/bge-m3'
+
+[nuggetizer]
+model='gemini-3.5-flash-lite'

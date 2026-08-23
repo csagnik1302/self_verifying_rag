@@ -1,6 +1,7 @@
 from qdrant_client import QdrantClient
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
+from tqdm import tqdm
 
 device=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -31,16 +32,14 @@ def rag_output_parser(output_sent_list, qdrant_url, qdrant_api_key):
     return out
 
 
-def nli_verifier(model_name, rag_output, hf_token, qdrant_url, qdrant_api_key):
-
-    parsed_rag_output=rag_output_parser(rag_output, qdrant_url, qdrant_api_key)
+def nli_verifier(model_name, parsed_rag_output, hf_token):
 
     tokenizer=AutoTokenizer.from_pretrained(pretrained_model_name_or_path=model_name, token=hf_token)
     model=AutoModelForSequenceClassification.from_pretrained(pretrained_model_name_or_path=model_name, token=hf_token).to(device)
 
     trial_list=[]
 
-    for i in parsed_rag_output:
+    for i in tqdm(parsed_rag_output, desc='NLI PROCESSING'):
         hypothesis=i['claim']
         premise_list=i['support']
 
@@ -84,6 +83,6 @@ if __name__=='__main__':
     hf_token=os.getenv("HF_ACCESS_TOKEN")
     model_name='MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7'
 
-    out=nli_verifier(model_name=model_name, rag_output=test_cases, hf_token=hf_token, qdrant_api_key=qdrant_api_key, qdrant_url=qdrant_url)
-
+    parsed_output=rag_output_parser(output_sent_list=test_cases, qdrant_url=qdrant_url, qdrant_api_key=qdrant_api_key)
+    out=nli_verifier(model_name=model_name, parsed_rag_output=parsed_output, hf_token=hf_token)
     print(out)

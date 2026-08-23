@@ -10,3 +10,9 @@ psutil
 kernels
 google-genai
 streamlit
+datasets
+tqdm
+scikit-learn
+matplotlib
+clean-text[gpl]
+tomlib

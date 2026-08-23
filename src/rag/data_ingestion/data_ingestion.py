@@ -16,7 +16,7 @@ def loader(directory):
 
 
 
-def chunker(documents,chunk_size=1000,chunk_overlap=200):
+def chunker(documents,chunk_size=1000,chunk_overlap=100):
 
     splitter=RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap, separators=['\n\n','\n',' ',''], length_function=len)
 
@@ -102,12 +102,16 @@ if __name__=='__main__':
 
     import os
     from dotenv import load_dotenv
+    import tomllib
 
     load_dotenv()
 
     PATH=r'data\raw'
 
-    embedding_model='BAAI/bge-m3'
+    with open('config.toml','rb') as f:
+        config=tomllib.load(f)
+
+    embedding_model=config['data_ingestion']['chunk_embedding_model']
 
     hf_token=os.getenv('HF_ACCESS_TOKEN')
     cluster_api_key=os.getenv('QDRANT_API_KEY')

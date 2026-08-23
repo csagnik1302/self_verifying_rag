@@ -1,4 +1,4 @@
-from misc.retrieval_corpus.utilities import export_pdf
+from src.misc.retrieval_corpus.utilities import export_pdf
 import re
 import wikipediaapi
 
@@ -70,56 +70,23 @@ def main(topic_iter):
 
 if __name__=='__main__':
 
+    import os
+    from pathlib import Path
+    import ast
+
+    PARENT=Path(__file__).resolve().parent
+    MISC=PARENT.parent
+    SRC=MISC.parent
+    ROOT=SRC.parent
+
+    topic_set_path=ROOT/'src'/'misc'/'resources'/'topic_set.txt'
+
     wiki=wikipediaapi.Wikipedia(user_agent='Project (csagnik180@gmail.com)', language='en')
 
+    with open(topic_set_path,'r',encoding='utf-8') as f:
+        topics_temp=f.read()
 
-    topics = {'Sports — Olympics / Football World Cup': [
-            'Olympic Games',
-            'Olympics stubs',
-            'FIFA World Cup',
-            'Summer Olympics',
-            'Winter Olympics',
-            'Olympic sports',
-            'History of the Olympic Games',
-            'FIFA World Cup finals',
-            'Association football competitions',
-        ],
-        'World History (20th century)': [
-            '20th-century history',
-            'Wars by century',
-            'Cold War',
-            'World War I',
-            'World War II',
-            'Decolonization',
-            '20th-century military history',
-            'History of the United Nations',
-            '20th-century conflicts',
-        ],
-        'Economy of India / Banking & Finance in India': [
-            'Economy of India',
-            'Banking in India',
-            'Reserve Bank of India',
-            'Indian rupee',
-            'Economic history of India',
-            'Financial services companies of India',
-            'Stock exchanges in India',
-            'Taxation in India',
-            'Indian economists',
-        ],
-        'Space Exploration': [
-            'Space exploration',
-            'Space missions',
-            'Human spaceflight',
-            'Space probes',
-            'Space agencies',
-            'Artificial satellites',
-            'NASA programs',
-            'Mars exploration',
-            'Moon landings',
-            'Space stations',
-        ],
-    }
-
+    topics = ast.literal_eval(topics_temp)
 
     topic_list=main(topics)
 
