@@ -1,3 +1,50 @@
-*.pyc
-.venv
+# Python Bytecode & Caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+/.venv/
+/venv/
+/env/
+/ENV/
+
+# Environment Variables & Secrets
 .env
+.env.*
+!.env.example
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Testing, Code Analysis & Coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Build & Packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Logs & Database Files
+*.log
+*.sqlite
+*.sqlite3
+*.db
