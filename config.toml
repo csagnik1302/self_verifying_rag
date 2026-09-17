@@ -4,8 +4,22 @@ dense_model='BAAI/bge-large-en-v1.5'
 sparse_model='Qdrant/bm25'
 BATCH_SIZE=10
 
+[router]
+model='Rabbani088888/adaptive-rag-router'
+
 [retrieval]
-topk=20
+dense_topk=30
+sparse_topk=30
+rrf_dense_topk=15
+rrf_sparse_topk=15
+rrf_topk=30
+
+[rerank]
+cross_encoder_model='BAAI/bge-reranker-base'
+topk=10
+
+[generator]
+model='gemini-3.1-flash-lite'
 
 [conflict_detection]
 embedding_model='sentence-transformers/all-MiniLM-L6-v2'
